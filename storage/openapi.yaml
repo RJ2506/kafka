@@ -11,23 +11,6 @@ tags:
     description: only the user can see their own products
 paths:
   /buy:
-    post:
-      tags:
-        - users
-      summary: purchase the item you selected
-      description: purchase the item you selected
-      operationId: app.purchase_item
-      requestBody:
-        description: purchased item
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/purchase"
-      responses:
-        "200":
-          description: Your transaction is successfull
-        "400":
-          description: invalid input, object invalid
     get:
       summary: gets the new purchase item
       operationId: app.get_purchase_item
@@ -59,23 +42,6 @@ paths:
                   message:
                     type: string
   /search:
-    post:
-      tags:
-        - users
-      summary: search an item that is on sale
-      description: search an item that is on sale
-      operationId: app.search_item
-      requestBody:
-        description: search for sale items
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/search"
-      responses:
-        "200":
-          description: search results matching criteria
-        "400":
-          description: invalid input, object invalid
     get:
       tags:
         - devices

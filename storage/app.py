@@ -42,28 +42,6 @@ DB_ENGINE = create_engine(
 Base.metadata.bind = DB_ENGINE
 DB_SESSION = sessionmaker(bind=DB_ENGINE)
 
-
-def purchase_item(body):
-    """purchase the item you selected"""
-    # session = DB_SESSION()
-    
-    # bp = BuyingProducts(
-    #     body["customer_id"],
-    #     body["credit_card"],
-    #     body["price"],
-    #     body["purchased_date"],
-    #     body["transaction_number"],
-    #     body["trace_id"],
-    # )
-    # logger.info(f"stored event buy request with a trace id of {body['trace_id']}")
-
-    # session.add(bp)
-    # session.commit()
-    # session.close()
-
-    return NoContent, 201
-
-
 def get_purchase_item(timestamp):
     """get the  timestamp of the purchase tiem"""
     session = DB_SESSION()
@@ -83,29 +61,6 @@ def get_purchase_item(timestamp):
     )
 
     return results_list, 200
-
-
-def search_item(body):
-    """search for the product"""
-    # session = DB_SESSION()
-
-    # sp = SearchProducts(
-    #     body["brand_name"],
-    #     body["item_description"],
-    #     body["price"],
-    #     body["product_name"],
-    #     body["quantity_left"],
-    #     body["sales_price"],
-    #     body["trace_id"],
-    # )
-
-    # logger.info(f"stored event buy request with a trace id of {body['trace_id']}")
-
-    # session.add(sp)
-    # session.commit()
-    # session.close()
-    return NoContent, 201
-
 
 def get_search_item(timestamp):
     """get the  timestamp of the purchase tiem"""
