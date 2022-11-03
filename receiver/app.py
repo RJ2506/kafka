@@ -30,7 +30,9 @@ def purchase_item(body):
     #     json.dumps(body),
     #     headers={"Content-type": "application/json"},
     # )
-    client = KafkaClient(host=f'{app_config["events"]["hostname"]}:{app_config["events"]["port"]}')
+    server = f'{app_config["events"]["hostname"]}:{app_config["events"]["port"]}'
+    print(server)
+    client = KafkaClient(host=server)
     topic = client.topics[str.encode(app_config["events"]["topic"])]
     producer = topic.get_sync_producer()
 
