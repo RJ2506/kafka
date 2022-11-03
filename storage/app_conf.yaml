@@ -2,6 +2,6 @@ version: 1
 datastore:
   user: rj
   password: Rodolfjohn25!
-  hostname: localhost
+  hostname: acit3855-kafka-lab6a.eastus.cloudapp.azure.com
   port: 3306
   db: kafka
