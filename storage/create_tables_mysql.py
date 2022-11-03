@@ -1,7 +1,7 @@
 import mysql.connector
 
 conn = mysql.connector.connect(
-    user="RJ", password="Rodolfjohn25!", host="acit3855-kafka-lab6a.eastus.cloudapp.azure.com", database="kafka"
+    user="RJ", password="Rodolfjohn25!", host="acit3855-kafka-lab6a.eastus.cloudapp.azure.com", database="events"
 )
 
 
