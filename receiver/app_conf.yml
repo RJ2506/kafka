@@ -1,0 +1,5 @@
+version: 1
+purchase:
+  url: http://localhost:8090/buy
+search:
+  url: http://localhost:8090/search
