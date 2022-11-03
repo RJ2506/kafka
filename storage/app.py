@@ -103,7 +103,8 @@ def process_messages():
 
     if msg["type"] == "purchase": # Change this to your event type
         # Store the event1 (i.e., the payload) to the DB
-        BuyingProducts(
+        session = DB_SESSION()
+        bp = BuyingProducts(
             payload["customer_id"],
             payload["credit_card"],
             payload["price"],
@@ -111,9 +112,14 @@ def process_messages():
             payload["transaction_number"],
             payload["trace_id"],
         )
+        session.add(bp)
+        session.commit()
+        session.close()
     elif msg["type"] == "search": # Change this to your event type
         # Store the event2 (i.e., the payload) to the DB
-        SearchProducts(
+        session = DB_SESSION()
+
+        sp = SearchProducts(
             payload["brand_name"],
             payload["item_description"],
             payload["price"],
@@ -122,6 +128,9 @@ def process_messages():
             payload["sales_price"],
             payload["trace_id"],
         )
+        session.add(sp)
+        session.commit()
+        session.close()
     # Commit the new message as being read
     consumer.commit_offsets()
 
@@ -129,7 +138,7 @@ app = connexion.FlaskApp(__name__, specification_dir="")
 app.add_api("openapi.yaml", strict_validation=True, validate_responses=True)
 
 if __name__ == "__main__":
-    t1 = Thread(target=process_messages)
+    t1 = Thread(target=process_messages())
     t1.setDaemon(True)
     t1.start()
     app.run(port=8090)
