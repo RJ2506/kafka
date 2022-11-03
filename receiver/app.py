@@ -7,6 +7,7 @@ import requests
 import json
 import yaml
 import logging, logging.config
+from pykafka import KafkaClient
 
 with open("app_conf.yml", "r") as f:
     app_config = yaml.safe_load(f.read())
