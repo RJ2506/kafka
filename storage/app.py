@@ -13,6 +13,7 @@ import pymysql
 import mysql.connector
 import yaml, logging, logging.config
 import datetime
+from pykafka import KafkaClient
 
 with open("app_conf.yaml", "r") as f:
     app_config = yaml.safe_load(f.read())
