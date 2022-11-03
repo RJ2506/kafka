@@ -25,14 +25,25 @@ def purchase_item(body):
     body["trace_id"] = trace
 
     logging.info(f"Returned event buy response {trace}")
-    res = requests.post(
-        "http://localhost:8090/buy",
-        json.dumps(body),
-        headers={"Content-type": "application/json"},
-    )
+    # res = requests.post(
+    #     "http://localhost:8090/buy",
+    #     json.dumps(body),
+    #     headers={"Content-type": "application/json"},
+    # )
+    client = KafkaClient(host=f'{app_config["events"]["hostname"]}:{app_config["events"]["port"]}')
+    topic = client.topics[str.encode(app_config["events"]["topic"])]
+    producer = topic.get_sync_producer()
 
-    logging.info(f"Returned event buy status {res.status_code}")
-    return res.text, res.status_code
+    msg = {
+        "type": "buy",
+        "datetime": datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S"),
+        "payload": body
+    }
+
+    msg_str = json.dumps(msg)
+    producer.produce(msg_str.encode('utf-8'))
+    # logger.info(f"Returned event buy status ")
+    return 201
 
 
 def search_item(body):
