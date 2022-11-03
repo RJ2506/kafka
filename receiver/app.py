@@ -35,7 +35,7 @@ def purchase_item(body):
     producer = topic.get_sync_producer()
 
     msg = {
-        "type": "buy",
+        "type": "purchase",
         "datetime": datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S"),
         "payload": body
     }
@@ -51,14 +51,28 @@ def search_item(body):
     trace = str(uuid.uuid4())
     body["trace_id"] = trace
 
-    logging.info(f"Returned event search response {trace}")
-    res = requests.post(
-        "http://localhost:8090/search",
-        json.dumps(body),
-        headers={"Content-type": "application/json"},
-    )
-    logging.info(f"Returned event search status {res.status_code}")
-    return res.text, res.status_code
+    # logging.info(f"Returned event search response {trace}")
+    # res = requests.post(
+    #     "http://localhost:8090/search",
+    #     json.dumps(body),
+    #     headers={"Content-type": "application/json"},
+    # )
+    # logging.info(f"Returned event search status {res.status_code}")
+    client = KafkaClient(host=f'{app_config["events"]["hostname"]}:{app_config["events"]["port"]}')
+    topic = client.topics[str.encode(app_config["events"]["topic"])]
+    producer = topic.get_sync_producer()
+
+    msg = {
+        "type": "search",
+        "datetime": datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S"),
+        "payload": body
+    }
+
+    msg_str = json.dumps(msg)
+    producer.produce(msg_str.encode('utf-8'))
+ 
+    return 201
+    
 
 
 app = connexion.FlaskApp(__name__, specification_dir="")
