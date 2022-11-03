@@ -4,4 +4,4 @@ datastore:
   password: Rodolfjohn25!
   hostname: localhost
   port: 3306
-  db: mydb
+  db: kafka
